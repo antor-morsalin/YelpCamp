@@ -1,0 +1,51 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="px-4 md:px-6 lg:px-8 py-16">
+  <form id="authForm" action="/register" method="POST" class="mx-auto w-full max-w-4xl bg-white rounded-2xl border border-slate-200/70 shadow-sm hover:shadow-md transition-all duration-300 ease-out transform-gpu hover:scale-[1.002] active:scale-[0.998] p-12">
+    <div class="space-y-10">
+      <!-- Header -->
+      <header class="space-y-3 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight">
+          Create your account
+        </h1>
+        <p class="text-base text-slate-500">Sign up to join the community.</p>
+      </header>
+
+      <!-- Username -->
+      <div class="flex flex-col gap-1.5">
+        <label for="username" class="text-sm font-medium text-slate-700">Username</label>
+        <input type="text" name="username" id="username" autocomplete="username" placeholder="e.g., camp_explorer" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10" />
+        <p id="username_error" class="h-5 text-sm text-red-600 hidden">
+          Username must be 3–20 characters.
+        </p>
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-col gap-1.5">
+        <label for="email" class="text-sm font-medium text-slate-700">Email</label>
+        <input type="email" name="email" id="email" autocomplete="email" placeholder="you@example.com" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10" />
+        <p id="email_error" class="h-5 text-sm text-red-600 hidden">
+          Please enter a valid email address.
+        </p>
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col gap-1.5">
+        <label for="password" class="text-sm font-medium text-slate-700">Password</label>
+        <input type="password" name="password" id="password" autocomplete="new-password" placeholder="Minimum 8 characters" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10" />
+        <p id="password_error" class="h-5 text-sm text-red-600 hidden">
+          Password must be at least 8 characters and include a letter and a number.
+        </p>
+      </div>
+
+      <!-- Button -->
+      <div>
+        <button type="submit" class="w-full h-14 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white font-semibold rounded-lg shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:outline-none focus-visible:ring-4 focus-visible:ring-green-500/20 transform-gpu">
+          Register
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="/authValidation.js"></script>

@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="flex justify-center items-center min-h-screen bg-gray-50 py-6 px-4">
+  <form action="/campgrounds/<%= camp['id'] %>?_method=PUT" method="POST" class="bg-white shadow-sm hover:shadow-md transition-all duration-300 ease-out transform-gpu hover:scale-[1.01] active:scale-[0.99] rounded-2xl p-10 w-full max-w-lg border border-slate-200/70">
+
+    <div class="flex flex-col gap-8">
+      <p class="text-2xl md:text-3xl font-semibold text-slate-800 text-center tracking-tight">
+        Edit Campground Information
+      </p>
+
+      <!-- Name -->
+      <div class="flex flex-col gap-2">
+        <label for="title" class="text-sm font-medium text-slate-700">Name</label>
+        <input type="text" name="title" id="title" value="<%= camp['title'] %>" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10">
+      </div>
+
+      <!-- Price -->
+      <div class="flex flex-col gap-2">
+        <label for="price" class="text-sm font-medium text-slate-700">Price</label>
+        <input type="number" name="price" id="price" value="<%= camp['price'] %>" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10">
+      </div>
+
+      <!-- Location -->
+      <div class="flex flex-col gap-2">
+        <label for="location" class="text-sm font-medium text-slate-700">Location</label>
+        <input type="text" name="location" id="location" value="<%= camp['location'] %>" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10">
+      </div>
+
+      <!-- Description -->
+      <div class="flex flex-col gap-2">
+        <label for="description" class="text-sm font-medium text-slate-700">Description</label>
+        <textarea name="description" id="description" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 h-28 resize-none"><%= camp['description'] %></textarea>
+      </div>
+
+      <!-- Button -->
+      <div>
+        <button class="w-full h-12 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-medium rounded-lg shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 transform-gpu">
+          Update
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<script src="/newCampValidation.js"></script>

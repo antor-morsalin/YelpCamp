@@ -1,0 +1,52 @@
+<% if (error && error.length !== 0) { %>
+<!-- Alert -->
+<div data-alert role="alert" aria-live="assertive" class="relative flex w-full max-w-xl items-start gap-3 rounded-lg border border-red-200 bg-red-50/80 p-4 text-red-800 ring-1 ring-red-200 ring-inset shadow-sm transition duration-200 ease-out
+           dark:border-red-800/50 dark:bg-red-900/40 dark:text-red-100 dark:ring-red-800/60 my-5">
+  <!-- Icon -->
+  <div class="mt-0.5 text-red-500 dark:text-red-300">
+    <!-- Exclamation Triangle icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path d="M8.485 2.495a2 2 0 0 1 3.03 0l6.2 7.3c.96 1.13.152 2.855-1.516 2.855H3.8c-1.668 0-2.476-1.725-1.516-2.855l6.2-7.3z" />
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M10 6.75c.414 0 .75.336.75.75v3.5a.75.75 0 1 1-1.5 0v-3.5c0-.414.336-.75.75-.75Zm0 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+    </svg>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1">
+    <h3 class="font-semibold leading-6">Something went wrong</h3>
+    <p class="mt-1 text-sm/6 text-red-800/90 dark:text-red-100/80">
+      <%= error %>
+    </p>
+  </div>
+
+  <!-- Close button -->
+  <button type="button" data-dismiss class="inline-flex rounded-md p-1.5 text-red-600/80 hover:bg-red-100 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-red-300/90 dark:hover:bg-red-800/50 dark:focus-visible:ring-offset-gray-900" aria-label="Dismiss alert">
+    <span class="sr-only">Dismiss</span>
+    <!-- X icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 0 1 1.06 0L10 8.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L11.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 1 1-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 0 1 0-1.06z" clip-rule="evenodd" />
+    </svg>
+  </button>
+</div>
+<% } %>
+
+
+<script>
+  // Smooth dismiss: fade/scale out then remove from DOM
+  document.querySelectorAll('[data-dismiss]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const alert = btn.closest('[data-alert]');
+      if (!alert) return;
+
+      // Add exit transition classes
+      alert.classList.add('opacity-0', 'scale-[0.98]');
+      alert.style.transitionProperty = 'opacity, transform';
+
+      // Remove after transition ends
+      const removeAfter = () => alert.remove();
+      alert.addEventListener('transitionend', removeAfter, {
+        once: true
+      });
+    });
+  });
+</script>

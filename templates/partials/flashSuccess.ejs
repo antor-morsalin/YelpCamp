@@ -1,0 +1,54 @@
+<% if (success.length != 0) { %>
+<!-- Alert -->
+<div data-alert role="alert" aria-live="polite" class="relative flex w-full max-w-xl items-start gap-3 rounded-lg border border-sky-200 bg-sky-50/80 p-4 text-sky-800 ring-1 ring-sky-200 ring-inset shadow-sm transition duration-200 ease-out
+           dark:border-sky-800/50 dark:bg-sky-900/40 dark:text-sky-100 dark:ring-sky-800/60 my-5">
+  <!-- Icon -->
+  <div class="mt-0.5 text-sky-500 dark:text-sky-300">
+    <!-- Info icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16Zm-.75-9.25a.75.75 0 011.5 0v5.5a.75.75 0 01-1.5 0v-5.5ZM10 6.5a1 1 0 110-2 1 1 0 010 2Z" clip-rule="evenodd" />
+    </svg>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1">
+    <h3 class="font-semibold leading-6">Heads up!</h3>
+    <p class="mt-1 text-sm/6 text-sky-800/90 dark:text-sky-100/80">
+      <%= success %>
+    </p>
+  </div>
+
+  <!-- Close button -->
+  <button type="button" data-dismiss class="inline-flex rounded-md p-1.5 text-sky-600/80 hover:bg-sky-100 hover:text-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-sky-300/90 dark:hover:bg-sky-800/50 dark:focus-visible:ring-offset-gray-900" aria-label="Dismiss alert">
+    <span class="sr-only">Dismiss</span>
+    <!-- X icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path fill-rule="evenodd" d="M4.22 4.22a.75.75 0 011.06 0L10 8.94l4.72-4.72a.75.75 0 111.06 1.06L11.06 10l4.72 4.72a.75.75 0 11-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 11-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 010-1.06z" clip-rule="evenodd" />
+    </svg>
+  </button>
+</div>
+<% } %>
+
+
+
+
+
+<script>
+  // Smooth dismiss: fade/scale out then remove from DOM
+  document.querySelectorAll('[data-dismiss]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const alert = btn.closest('[data-alert]');
+      if (!alert) return;
+
+      // Add exit transition classes
+      alert.classList.add('opacity-0', 'scale-[0.98]');
+      alert.style.transitionProperty = 'opacity, transform';
+
+      // Remove after transition ends
+      const removeAfter = () => alert.remove();
+      alert.addEventListener('transitionend', removeAfter, {
+        once: true
+      });
+    });
+  });
+</script>

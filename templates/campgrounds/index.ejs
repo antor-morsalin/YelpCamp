@@ -1,0 +1,61 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="max-w-7xl w-full mx-auto px-6 py-12">
+  <header class="mb-10 flex items-end justify-between gap-4">
+    <div>
+      <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900">All Campgrounds</h1>
+      <p class="mt-2 text-gray-600">Browse our curated list of places to stay and explore.</p>
+    </div>
+    <% if (locals.isAuthenticated) { %>
+    <a href="/campgrounds/new" class="inline-flex items-center rounded-full px-4 h-10 text-sm font-medium bg-gray-900 text-white hover:bg-black active:bg-gray-800 transition">
+      New Campground
+    </a>
+    <% } %>
+  </header>
+
+  <% if (!campgrounds || campgrounds.length === 0) { %>
+  <section class="rounded-2xl border border-gray-200 bg-white p-10 text-center">
+    <h2 class="text-xl font-medium text-gray-800">No campgrounds yet</h2>
+    <p class="mt-2 text-gray-600">Check back soon, or add the first one.</p>
+    <% if (locals.isAuthenticated) { %>
+    <a href="/campgrounds/new" class="mt-6 inline-flex items-center rounded-full px-4 h-10 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 transition">
+      Create Campground
+    </a>
+    <% } %>
+  </section>
+  <% } else { %>
+  <ul role="list" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+    <% for (const camp of campgrounds) { %>
+    <li class="group">
+      <a href="/campgrounds/<%= camp._id %>" class="block rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">
+        <div class="relative">
+          <img src="<%= camp.image %>" alt="<%= (camp.title || 'Campground') + (camp.location ? ' – ' + camp.location : '') %>" class="w-full h-56 object-cover select-none transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" referrerpolicy="no-referrer" />
+        </div>
+        <div class="p-6 flex flex-col gap-3">
+          <h2 class="text-lg md:text-xl font-semibold text-gray-900 line-clamp-1"><%= camp.title %></h2>
+
+          <div class="flex items-baseline justify-between gap-3">
+            <p class="text-blue-700 font-semibold">
+              $<%= camp.price %> <span class="text-gray-500 font-normal">/ day</span>
+            </p>
+            <% if (camp.location) { %>
+            <p class="text-sm text-gray-500 line-clamp-1"><%= camp.location %></p>
+            <% } %>
+          </div>
+
+          <% if (camp.description) { %>
+          <p class="text-gray-600 leading-relaxed line-clamp-2"><%= camp.description %></p>
+          <% } %>
+
+          <div class="mt-2">
+            <span class="inline-flex items-center justify-center w-full h-11 rounded-full bg-blue-600 text-white text-sm font-medium shadow-sm transform transition-all duration-300 ease-out hover:bg-blue-700 hover:scale-105 hover:shadow-lg hover:opacity-95">
+              View details
+            </span>
+          </div>
+        </div>
+      </a>
+    </li>
+    <% } %>
+  </ul>
+  <% } %>
+</div>

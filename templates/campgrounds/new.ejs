@@ -1,0 +1,120 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="flex justify-center items-center min-h-screen bg-gray-50 py-6 px-4">
+  <form enctype="multipart/form-data" id="newCampForm" action="/campgrounds" method="POST" class="bg-white shadow-sm hover:shadow-md transition-all duration-300 ease-out transform-gpu hover:scale-[1.01] active:scale-[0.99] rounded-2xl p-10 w-full max-w-lg border border-slate-200/70">
+
+    <div class="flex flex-col gap-8">
+      <p class="text-2xl md:text-3xl font-semibold text-slate-800 text-center tracking-tight">
+        Fill the following information and post your camp
+      </p>
+
+      <!-- Name -->
+      <div class="flex flex-col gap-2">
+        <label for="title" class="text-sm font-medium text-slate-700">Name</label>
+        <input type="text" name="title" id="title" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10">
+        <p id="title_error" class="text-sm text-red-600 hidden">Camp name can not be empty</p>
+      </div>
+
+
+      <!-- IMAGE FIELD -->
+      <div class="flex flex-col gap-2">
+        <span class="text-sm font-medium text-slate-700">Image</span>
+
+        <!-- Clickable label wrapper -->
+        <label for="image" class="group relative flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 hover:bg-gray-100 transition-all duration-200 cursor-pointer">
+          <svg class="w-10 h-10 text-gray-400 mb-2 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h10a4 4 0 004-4M7 10l5-5m0 0l5 5m-5-5v12" />
+          </svg>
+          <p id="uploadText" class="text-sm text-slate-600 text-center">
+            Click to upload (or drag &amp; drop)
+          </p>
+        </label>
+
+        <!-- Actual input (hidden but accessible) -->
+        <input id="image" name="image" type="file" accept="image/*" class="sr-only" />
+
+        <!-- Feedback + preview -->
+        <div id="imageFeedback" class="mt-2 text-sm text-slate-700 hidden"></div>
+        <img id="preview" class="mt-2 w-32 h-32 object-cover rounded-lg hidden" alt="Selected image preview">
+      </div>
+
+      <!-- Price -->
+      <div class="flex flex-col gap-2">
+        <label for="price" class="text-sm font-medium text-slate-700">Price</label>
+        <input type="number" name="price" id="price" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10">
+        <p id="price_error" class="text-sm text-red-600 hidden">Price must be valid</p>
+      </div>
+
+      <!-- Location -->
+      <div class="flex flex-col gap-2">
+        <label for="location" class="text-sm font-medium text-slate-700">Location</label>
+        <input type="text" name="location" id="location" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10">
+        <p id="location_error" class="text-sm text-red-600 hidden">Enter the camp location</p>
+      </div>
+
+      <!-- Description -->
+      <div class="flex flex-col gap-2">
+        <label for="description" class="text-sm font-medium text-slate-700">Description</label>
+        <textarea name="description" id="description" class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all duration-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 h-28 resize-none"></textarea>
+        <p id="description_error" class="text-sm text-red-600 hidden">Description too short</p>
+      </div>
+
+      <!-- Button -->
+      <div>
+        <button class="w-full h-12 bg-green-700 hover:bg-green-800 active:bg-green-900 text-white font-medium rounded-lg shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:outline-none focus-visible:ring-4 focus-visible:ring-green-500/20 transform-gpu">
+          Post
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+<script>
+  // Guard against DOM not ready
+  (function() {
+    const input = document.getElementById('image');
+    const uploadText = document.getElementById('uploadText');
+    const feedback = document.getElementById('imageFeedback');
+    const preview = document.getElementById('preview');
+
+    if (!input || !uploadText || !feedback || !preview) {
+      console.warn('Image upload UI: missing expected elements/IDs.');
+      return;
+    }
+
+    input.addEventListener('change', () => {
+      const file = input.files && input.files[0];
+
+      if (!file) {
+        uploadText.textContent = 'Click to upload (or drag & drop)';
+        feedback.classList.add('hidden');
+        preview.classList.add('hidden');
+        preview.removeAttribute('src');
+        return;
+      }
+
+      // Update label text
+      uploadText.textContent = `✅ ${file.name} ready to upload`;
+
+      // Show details
+      const kb = Math.round(file.size / 1024);
+      feedback.textContent = `Selected: ${file.name} • ${kb} KB`;
+      feedback.classList.remove('hidden');
+
+      // Optional thumbnail preview for images
+      if (file.type.startsWith('image/')) {
+        const url = URL.createObjectURL(file);
+        preview.src = url;
+        preview.classList.remove('hidden');
+      } else {
+        preview.classList.add('hidden');
+        preview.removeAttribute('src');
+      }
+    });
+  })();
+</script>
+
+
+<script src="/newCampValidation.js"></script>

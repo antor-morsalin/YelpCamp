@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/output.css">
+</head>
+
+<body class="flex flex-col mt-[80px] min-h-screen items-center">
+
+  <%- include('../partials/navbar') %>
+
+  <%- include('../partials/flashSuccess') %>
+  <%- include('../partials/flashError') %>
+  <%- body %>
+
+  <%- include('../partials/footer') %>
+
+  <script>
+    let menuState = 'hidden';
+    let menu = document.getElementById('menu');
+    let menuList = document.getElementById('menu-list');
+
+    menu.addEventListener('click', () => {
+      if (menuState === 'hidden') {
+        menuState = 'visible';
+        menuList.classList = "flex flex-col px-8 py-5 gap-3 bg-slate-700 rounded-lg fixed right-[40px] top-[70px] lg:hidden";
+      } else if (menuState === "visible") {
+        menuState = 'hidden';
+        menuList.classList = "hidden flex-col px-8 py-5 gap-3 bg-slate-700 rounded-lg fixed right-[40px] top-[70px] lg:hidden";
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+ <% layout('layouts/boilerplate') %>
+
+
+ <div class="flex flex-col justify-center items-center flex-wrap w-full gap-8 md:gap-10 my-8 px-4 md:px-6 max-w-screen-xl mx-auto">
+
+
+   <!-- Campground Details -->
+   <div class="max-w-[580px] w-full bg-white rounded-2xl border border-slate-200/70 shadow-sm hover:shadow-md transition-all duration-300 ease-out transform-gpu hover:scale-[1.01] active:scale-[0.99] p-8 flex flex-col gap-6 my-3">
+
+     <!-- Title -->
+     <h1 class="text-slate-900 text-3xl md:text-4xl font-semibold tracking-tight">
+       <%= camp['title'] %>
+     </h1>
+
+     <p class="text-sm text-slate-500 mt-2">
+       Submitted by <%= camp['author']['username'] %>
+     </p>
+
+     <!-- Info -->
+     <div class="flex flex-col gap-2 text-slate-600 text-base leading-relaxed">
+       <p><span class="font-medium text-slate-700">Price:</span> $<%= camp['price'] %> per day</p>
+       <p><span class="font-medium text-slate-700">Location:</span> <%= camp['location'] %></p>
+       <p><span class="font-medium text-slate-700">Description:</span> <%= camp['description'] %></p>
+     </div>
+
+     <!-- Image -->
+     <div class="flex flex-col gap-2 group overflow-hidden rounded-xl">
+       <p class="text-slate-700 font-medium">Image</p>
+       <img src="<%= camp['image'] %>" alt="Campground Image" class="w-full h-64 sm:h-72 md:h-80 object-cover rounded-xl border border-slate-200/70 shadow-sm transition-transform duration-500 ease-out group-hover:scale-[1.03] transform-gpu">
+     </div>
+
+     <!-- Actions -->
+     <div class="flex flex-wrap gap-3 pt-2">
+       <a href="/campgrounds">
+         <button class="inline-flex items-center justify-center h-10 px-5 rounded-lg bg-blue-600 text-white font-medium shadow-sm hover:shadow-md hover:bg-blue-700 active:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 transform-gpu">
+           All Campgrounds
+         </button>
+       </a>
+
+       <% if (currentUser._id.toString() == camp.author._id.toString()) { %>
+       <a href="/campgrounds/<%= camp['_id'] %>/edit">
+         <button class="inline-flex items-center justify-center h-10 px-5 rounded-lg bg-blue-600 text-white font-medium shadow-sm hover:shadow-md hover:bg-blue-700 active:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 transform-gpu">
+           Edit Information
+         </button>
+       </a>
+
+       <form action="/campgrounds/<%= camp['_id'] %>?_method=DELETE" method="POST">
+         <button class="inline-flex items-center justify-center h-10 px-5 rounded-lg bg-red-600 text-white font-medium shadow-sm hover:shadow-md hover:bg-red-700 active:bg-red-800 hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:outline-none focus-visible:ring-4 focus-visible:ring-red-500/20 transform-gpu">
+           Delete
+         </button>
+       </form>
+       <% } %>
+
+     </div>
+
+   </div>
+
+   <% if (currentUser._id.toString() != camp.author._id.toString()) { %>
+
+
+
+   <!-- Review Form -->
+   <div class="w-full max-w-[580px] bg-white rounded-2xl border border-slate-200/70 shadow-sm hover:shadow-md transition-all duration-300 ease-out transform-gpu hover:scale-[1.01] active:scale-[0.99] p-8 flex flex-col gap-6 my-3">
+     <p class="text-slate-900 text-2xl md:text-3xl font-semibold tracking-tight">Leave your review</p>
+
+     <form action="/campgrounds/<%= camp['_id'] %>/review" method="post" class="w-full flex flex-col gap-5">
+       <div class="flex flex-col gap-2.5 items-start w-full">
+         <label for="comment" class="text-slate-700 font-medium">Your comment</label>
+         <textarea name="body" id="comment-box" rows="10" cols="50" placeholder="Leave your experience for other users to see" class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 placeholder-slate-400 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 resize-y" required></textarea>
+       </div>
+
+       <div class="flex flex-col gap-2.5 items-start w-full mb-3">
+         <label for="rating" class="text-slate-700 font-medium">Your Rating</label>
+         <div class="rating">
+           <input type="radio" name="rating" value="1" class="mask mask-star-2 bg-orange-400" aria-label="1 star" />
+           <input type="radio" name="rating" value="2" class="mask mask-star-2 bg-orange-400" aria-label="2 star" />
+           <input type="radio" name="rating" value="3" class="mask mask-star-2 bg-orange-400" aria-label="3 star" />
+           <input type="radio" name="rating" value="4" class="mask mask-star-2 bg-orange-400" aria-label="4 star" checked="checked" />
+           <input type="radio" name="rating" value="5" class="mask mask-star-2 bg-orange-400" aria-label="5 star" />
+         </div>
+       </div>
+
+       <button class="inline-flex items-center justify-center h-10 px-6 rounded-lg bg-blue-600 text-white font-medium shadow-sm hover:shadow-md hover:bg-blue-700 active:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 transform-gpu">
+         Submit
+       </button>
+     </form>
+     <% } %>
+     <button id="see-review" class="inline-flex items-center justify-center h-10 px-6 rounded-lg bg-green-600 text-white font-medium shadow-sm hover:shadow-md hover:bg-green-700 active:bg-green-800 hover:scale-105 active:scale-95 transition-all duration-200 ease-out focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 transform-gpu">
+       See all Reviews
+     </button>
+   </div>
+
+
+
+   <% if (camp['reviews'].length > 0) { %>
+   <div id="review-container" class="hidden w-full bg-white rounded-2xl border border-slate-200/70 shadow-sm hover:shadow-md transition-all duration-300 ease-out transform-gpu hover:scale-[1.01] active:scale-[0.99] p-8 flex-col gap-6 my-3">
+     <% for (let review of camp['reviews']) { %>
+     <div class="w-full flex flex-col gap-4 p-6 rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-200 ease-out hover:shadow-md hover:scale-[1.01] transform-gpu">
+       <div class="text-slate-700 text-sm">
+         by <%= review['author'] %>
+       </div>
+
+       <!-- Rating -->
+       <div class="rating rating-sm md:rating-md">
+         <div class="mask mask-star-2 bg-orange-400" aria-label="1 star" <% if (review['rating'] >= 1) { %> aria-current="true" <% } %>></div>
+         <div class="mask mask-star-2 bg-orange-400" aria-label="2 star" <% if (review['rating'] >= 2) { %> aria-current="true" <% } %>></div>
+         <div class="mask mask-star-2 bg-orange-400" aria-label="3 star" <% if (review['rating'] >= 3) { %> aria-current="true" <% } %>></div>
+         <div class="mask mask-star-2 bg-orange-400" aria-label="4 star" <% if (review['rating'] >= 4) { %> aria-current="true" <% } %>></div>
+         <div class="mask mask-star-2 bg-orange-400" aria-label="5 star" <% if (review['rating'] >= 5) { %> aria-current="true" <% } %>></div>
+       </div>
+
+       <!-- Review Body -->
+       <p class="text-slate-700 text-[15px] md:text-base leading-relaxed tracking-tight font-normal">
+         <%= review['body'] %>
+       </p>
+       <% if (currentUser._id.toString() == review.authorId.toString()) { %>
+       <div class="flex items-center justify-start gap-5">
+         <form action="/campgrounds/<%= camp['_id'] %>/review/<%= review['_id'] %>?_method=DELETE" method="post">
+           <button class=" text-sm bg-red-600 text-white px-3 py-2 rounded-xl hover:bg-red-700 hover:scale-105 active:bg-red-800 active:scale-95 transition-all duration-300">Delete review</button>
+         </form>
+
+       </div>
+       <% } %>
+
+     </div>
+
+
+     <% } %>
+   </div>
+   <% } %>
+
+ </div>
+
+
+ <script>
+   const seeReview = document.getElementById('see-review');
+   const reviewContainer = document.getElementById('review-container');
+   seeReview.addEventListener('click', () => {
+     reviewContainer.classList.remove('hidden');
+     reviewContainer.classList.remove('flex');
+     reviewContainer.classList.add('flex')
+   })
+ </script>

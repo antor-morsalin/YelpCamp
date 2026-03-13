@@ -1,0 +1,40 @@
+<nav class="fixed top-0 left-0 w-full bg-slate-900 z-50">
+  <!-- Big screen nav bar -->
+  <div class="hidden lg:flex items-center gap-10 h-[80px] p-10">
+    <a href="/" class="font-medium text-xl text-slate-300 hover:text-white mr-[30px]">YelpCamp</a>
+    <a href="/" class="font-medium text-slate-300 hover:text-white">Home</a>
+    <a href="/campgrounds" class="font-medium text-slate-300 hover:text-white">Campgrounds</a>
+    <a href="/campgrounds/new" class="font-medium text-slate-300 hover:text-white">New Campground</a>
+    <% if (isAuthenticated) { %>
+    <a href="/logout" class="font-medium text-slate-300 hover:text-white ml-auto">Logout</a>
+    <% } else { %>
+    <div class="hidden lg:flex items-center gap-10 h-full ml-auto">
+      <a href="/register" class="font-medium text-slate-300 hover:text-white">Register</a>
+      <a href="/login" class="font-medium text-slate-300 hover:text-white">Login</a>
+    </div>
+
+    <% } %>
+  </div>
+
+  <!-- smol screen navbar -->
+  <div class="flex justify-between h-[80px] p-10 items-center lg:hidden">
+    <a href="/" class="font-medium text-xl text-slate-300 hover:text-white mr-[30px]">YelpCamp</a>
+    <div class="flex flex-col lg:hidden gap-3">
+      <img src="/assets/icons/menu.png" alt="" class="w-[30px]" id="menu">
+    </div>
+    <!-- menu list -->
+    <div id="menu-list" class="hidden flex-col px-8 py-5 gap-3 bg-slate-700 rounded-lg fixed right-[40px] top-[70px] lg:hidden">
+      <a href="/" class="font-medium text-slate-300 hover:text-white">Home</a>
+      <a href="/campgrounds" class="font-medium text-slate-300 hover:text-white">Campgrounds</a>
+      <a href="/campgrounds/new" class="font-medium text-slate-300 hover:text-white">New Campground</a>
+      <% if (isAuthenticated) { %>
+      <a href="/logout" class="font-medium text-slate-300 hover:text-white">Logout</a>
+      <% } else { %>
+      <a href="/register" class="font-medium text-slate-300 hover:text-white">Register</a>
+      <a href="/login" class="font-medium text-slate-300 hover:text-white">Login</a>
+      <% } %>
+    </div>
+
+  </div>
+
+</nav>
